@@ -1,0 +1,139 @@
+
+
+body {
+  font-family: "Inter", sans-serif;
+  font-size: 16px;
+}
+
+.bgDark{
+  background-color: #313131;
+}
+.bgDark2{
+  background-color: #2a2a2a;
+}
+
+.bgGradient{
+  background: rgb(255,255,255);
+  background: -moz-linear-gradient(0deg, rgba(255,255,255,0.025630235004157953) 0%, rgba(0,0,0,0.7819327560125613) 100%);
+  background: -webkit-linear-gradient(0deg, rgba(255,255,255,0.025630235004157953) 0%, rgba(0,0,0,0.7819327560125613) 100%);
+  background: linear-gradient(0deg, rgba(255,255,255,0.025630235004157953) 0%, rgba(0,0,0,0.7819327560125613) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#000000",GradientType=1); 
+}
+
+.bgLight{
+  background-color: #e2e2e2;
+}
+
+.bgLight2{
+  background-color: #ffffff;
+}
+
+.bgBlue{
+  background-color: #1e88e5;
+}
+
+.bgBlue2{
+  background-color: #1976d2;
+}
+.bgBlue3{
+  background-color: #5497da;
+}
+
+.colorLight{
+  color: #e2e2e2;
+}
+
+.colorLight2{
+  color: #ffffff;
+}
+
+.colorDark{
+  color: #313131;
+}
+
+.colorDark2{
+  color: #2a2a2a;
+}
+
+.colorBlue{
+  color: #1e88e5;
+}
+
+.colorBlue2{
+  color: #004992;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 1fr min(1440px, 94%) 1fr;
+  grid-template-rows: 96px auto 72px;
+}
+
+.container > * {
+  grid-column: 2;
+}
+
+.container > .fluid {
+  grid-column: 1 / -1;
+}
+
+.vh100 {
+  height:100vh ;
+}
+.minvh100{
+  min-height: 100vh;
+}
+
+.inputDark{ 
+  background-color: #313131;
+  color: aliceblue;
+  border-radius: 0.5rem;
+  line-height: 2rem;
+  padding: 0.25rem;
+  text-align: center;
+  width: 25vw;
+  min-width: 300px;
+}
+
+.inputLight{ 
+  background-color: #00459e;
+  color: #ffffff;
+  border-radius: 0.5rem;
+  line-height: 2rem;
+  padding: 0.25rem;
+  text-align: center;
+  width: 25vw;
+  min-width: 300px;
+  border: #979797 solid 2px; 
+  
+}
+
+.btnDark{
+  background-color: #313131;
+  color: #ffffff;
+  border-radius: 0.5rem;
+  border: #979797 solid 2px;
+}
+
+.btnLight{
+  background-color: #154e99;
+  color: #ffffff;
+  border-radius: 0.5rem;
+  border: #979797 solid;
+}
+
+.borderDark{
+  border: #979797 solid 2px ;
+}
+
+.borderLight{
+  border: #ffffff solid 2px;
+}
+
+.borderBlue{
+  border: #00459e solid 2px;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
