@@ -2,39 +2,26 @@ import React, { useState } from "react";
 import { auth, db } from "../../utils/firebase";
 import { set, ref } from "firebase/database";
 
-function formatTimestamp(timestamp) {
-  const options = {
-    hour: "2-digit",
-    minute: "2-digit",
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  };
-
-  return new Date(timestamp).toLocaleString("tr-TR", options);
-}
-
 function UpdateToDoModal({ showModal, closeModal, todo }) {
   const [updatedTitle, setUpdatedTitle] = useState(todo.todo);
 
   const handleUpdateTodo = () => {
     const timestamp = Date.now();
-    const formattedTimestamp = formatTimestamp(timestamp);
 
     if (!updatedTitle) return;
 
     const updatedHistory = [
       ...todo.history,
       {
-        date: formattedTimestamp,
-        action: "Todo updated",
+        date: timestamp,
+        action: "Todo updated from : " + todo.todo + " to : " + updatedTitle + "",
         owner: auth.currentUser.uid,
       },
     ];
 
     set(ref(db, `todos/${auth.currentUser.uid}/${todo.section}/${todo.uidd}`), {
       todo: updatedTitle,
-      created: formattedTimestamp,
+      lastupdate: timestamp,
       uidd: todo.uidd,
       section: todo.section,
       history: updatedHistory,

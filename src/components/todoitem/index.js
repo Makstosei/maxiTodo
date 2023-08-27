@@ -8,18 +8,6 @@ import { FaTrash, FaPenAlt, FaArrowAltCircleRight, FaArrowAltCircleLeft, FaCheck
 
 import styles from "./style.module.css";
 
-function formatTimestamp(timestamp) {
-  const options = {
-    hour: "2-digit",
-    minute: "2-digit",
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  };
-
-  return new Date(timestamp).toLocaleString("tr-TR", options);
-}
-
 function TodoItem({ section, task, entrydata, uidd, todos }) {
   const theme = useSelector((state) => state.theme);
   const [showModal, setShowModal] = useState(false);
@@ -31,7 +19,6 @@ function TodoItem({ section, task, entrydata, uidd, todos }) {
   const bgButtonsClass = theme === "dark" ? "bgBlue3" : "bgBlue3";
 
   const timestamp = Date.now();
-  const formattedTimestamp = formatTimestamp(timestamp);
 
   const openModal = () => {
     setShowModal(true);
@@ -56,7 +43,7 @@ function TodoItem({ section, task, entrydata, uidd, todos }) {
     remove(ref(db, `todos/${auth.currentUser.uid}/${current}/${uidd}`));
 
     const newHistoryItem = {
-      date: formattedTimestamp,
+      date: timestamp,
       action: "Todo moved to " + to,
       owner: auth.currentUser.uid,
     };
@@ -65,7 +52,7 @@ function TodoItem({ section, task, entrydata, uidd, todos }) {
 
     set(ref(db, `todos/${auth.currentUser.uid}/${to}/${uidd}`), {
       todo: todo.todo,
-      created: formattedTimestamp,
+      lastupdate: timestamp,
       uidd: uidd,
       section: to,
       history: updatedHistory, // Güncellenmiş tarihçe dizisini kaydet

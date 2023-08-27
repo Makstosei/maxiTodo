@@ -28,12 +28,12 @@ function AddToDoModal({ showModal, closeModal }) {
     set(ref(db, `todos/${auth.currentUser.uid}/todo/${uidd}`), {
       // uid ile todos collection'ına todo ekleniyor
       todo: todoTitle,
-      created: formattedTimestamp,
+      lastupdate: timestamp,
       uidd: uidd,
       section: "todo",
       history: [
         {
-          date: formattedTimestamp,
+          date: timestamp,
           action: "Todo created",
           owner: auth.currentUser.uid,
         },
