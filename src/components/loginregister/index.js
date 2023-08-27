@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 
 import { auth, db } from "../../utils/firebase";
 import { onAuthStateChanged } from "firebase/auth";
-import Login from "../../components/Login";
-import Register from "../../components/Register";
+import Login from "../../components/login";
+import Register from "../../components/register";
 import { useRouter } from "next/navigation"; // useRouter ekledik
 
 import styles from "./style.module.css";
