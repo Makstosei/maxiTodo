@@ -25,7 +25,7 @@ function AddToDoModal({ showModal, closeModal }) {
     if (!todoTitle) return; // Eğer todoTitle boşsa fonksiyondan çık
 
     const uidd = uid(); // uid oluşturuluyor
-    set(ref(db, `todos/${auth.currentUser.uid}/todo/${uidd}`), {
+    set(ref(db, `db/todos/${auth.currentUser.uid}/todo/${uidd}`), {
       // uid ile todos collection'ına todo ekleniyor
       todo: todoTitle,
       lastupdate: timestamp,

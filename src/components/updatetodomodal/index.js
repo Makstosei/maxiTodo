@@ -19,7 +19,7 @@ function UpdateToDoModal({ showModal, closeModal, todo }) {
       },
     ];
 
-    set(ref(db, `todos/${auth.currentUser.uid}/${todo.section}/${todo.uidd}`), {
+    set(ref(db, `db/todos/${auth.currentUser.uid}/${todo.section}/${todo.uidd}`), {
       todo: updatedTitle,
       lastupdate: timestamp,
       uidd: todo.uidd,

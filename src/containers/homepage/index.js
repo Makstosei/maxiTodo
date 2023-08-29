@@ -22,7 +22,7 @@ function HomeContainer({ children, ...props }) {
   };
 
   return (
-    <div className="vh-100 d-flex flex-column" style={bodyStyle}>
+    <div className="minvh100 d-flex flex-column" style={bodyStyle}>
       <Header />
       <main className="flex-grow-1 d-flex align-items-center justify-content-center">{children}</main>
       <Footer />

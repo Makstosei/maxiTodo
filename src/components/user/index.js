@@ -30,7 +30,7 @@ export default function UserPage() {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        onValue(ref(db, `todos/${auth.currentUser.uid}`), (snapshot) => {
+        onValue(ref(db, `db/todos/${auth.currentUser.uid}`), (snapshot) => {
           setTodos([]);
           setWorkingTodo([]);
           setCompletedTodo([]);

@@ -40,7 +40,7 @@ function TodoItem({ section, task, entrydata, uidd, todos }) {
 
   const moveTodo = (uidd, current, to) => {
     const todo = todos.find((todo) => todo.uidd === uidd);
-    remove(ref(db, `todos/${auth.currentUser.uid}/${current}/${uidd}`));
+    remove(ref(db, `db/todos/${auth.currentUser.uid}/${current}/${uidd}`));
 
     const newHistoryItem = {
       date: timestamp,
@@ -50,7 +50,7 @@ function TodoItem({ section, task, entrydata, uidd, todos }) {
 
     const updatedHistory = [...todo.history, newHistoryItem]; // Yeni öğeyi ekleyerek güncellenmiş tarihçe dizisi
 
-    set(ref(db, `todos/${auth.currentUser.uid}/${to}/${uidd}`), {
+    set(ref(db, `db/todos/${auth.currentUser.uid}/${to}/${uidd}`), {
       todo: todo.todo,
       lastupdate: timestamp,
       uidd: uidd,
@@ -65,13 +65,13 @@ function TodoItem({ section, task, entrydata, uidd, todos }) {
 
   const deleteTodo = (uidd, section) => {
     if (section == "working") {
-      remove(ref(db, `todos/${auth.currentUser.uid}/working/${uidd}`));
+      remove(ref(db, `db/odos/${auth.currentUser.uid}/working/${uidd}`));
     }
     if (section == "completed") {
-      remove(ref(db, `todos/${auth.currentUser.uid}/completed/${uidd}`));
+      remove(ref(db, `db/todos/${auth.currentUser.uid}/completed/${uidd}`));
     }
     if (section == "todo") {
-      remove(ref(db, `todos/${auth.currentUser.uid}/todo/${uidd}`));
+      remove(ref(db, `db/todos/${auth.currentUser.uid}/todo/${uidd}`));
     }
   };
 
