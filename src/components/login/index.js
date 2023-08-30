@@ -17,13 +17,11 @@ export default function Login() {
   const buttonClass = theme === "dark" ? "btnDark" : "btnLight";
   const titleClass = theme === "dark" ? "colorLight" : "colorLight";
 
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (!user) {
-        router.push("/");
-      }
-    });
-  }, []);
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSignIn(); // Enter tuşuna basıldığında giriş işlemini tetikle
+    }
+  };
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -51,8 +49,22 @@ export default function Login() {
   return (
     <div className={`d-flex flex-column align-items-center justify-content-center gap-1`}>
       <h3 className={`font-monospace ${titleClass}`}>Login</h3>
-      <input className={`${styles.email} ${inputClass}`} type="email" placeholder="Email" onChange={handleEmailChange} value={email} />
-      <input className={`${styles.password} ${inputClass}`} type="password" placeholder="Password" onChange={handlePasswordChange} value={password} />
+      <input
+        className={`${styles.email} ${inputClass}`}
+        type="email"
+        placeholder="Email"
+        onChange={handleEmailChange}
+        onKeyDown={handleKeyPress}
+        value={email}
+      />
+      <input
+        className={`${styles.password} ${inputClass}`}
+        type="password"
+        placeholder="Password"
+        onChange={handlePasswordChange}
+        onKeyDown={handleKeyPress}
+        value={password}
+      />
       <button className={`${buttonClass} px-5 py-2`} onClick={handleSignIn}>
         Login
       </button>

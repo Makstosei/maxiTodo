@@ -7,24 +7,29 @@ import { onAuthStateChanged } from "firebase/auth";
 import Login from "../../components/login";
 import Register from "../../components/register";
 import { useRouter } from "next/navigation"; // useRouter ekledik
+import { signOut } from "firebase/auth";
 
 import styles from "./style.module.css";
 
 function LoginRegister() {
-  const [isRegister, setIsRegister] = React.useState(false);
+  const [isRegistering, setIsRegister] = React.useState(false);
   const theme = useSelector((state) => state.theme);
   const router = useRouter(); // useRouter kullanımı
 
   const titleClass = theme === "dark" ? styles.titleDark : styles.titleLight;
 
   const handleToggleForm = () => {
-    setIsRegister(!isRegister);
+    const newIsRegister = !isRegistering;
+    setIsRegister(newIsRegister);
+    console.log(newIsRegister);
   };
+
+  signOut(auth);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        router.push("/user/1");
+      if (auth.currentUser && isRegistering) {
+        router.push("/user/123");
       }
     });
 
@@ -33,9 +38,9 @@ function LoginRegister() {
 
   return (
     <div className="welcome d-flex flex-column">
-      {isRegister ? <Register /> : <Login />}
+      {isRegistering ? <Register /> : <Login />}
       <button className={`${titleClass} mt-3`} onClick={handleToggleForm}>
-        {isRegister ? "Already have an account?" : "Don't have an account? Register here."}
+        {isRegistering ? "Already have an account?" : "Don't have an account? Register here."}
       </button>
     </div>
   );

@@ -10,7 +10,6 @@ import sky from "../../media/sky.jpg";
 
 function HomeContainer({ children, ...props }) {
   const theme = useSelector((state) => state.theme);
-
   const backgroundThemeImage = theme === "dark" ? stars : sky;
 
   const bodyStyle = {
