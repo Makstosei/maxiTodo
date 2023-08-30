@@ -55,6 +55,7 @@ export default function Register() {
   async function handleRegistration(registerInformation, theme) {
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, registerInformation.email, registerInformation.password);
+
       const user = userCredential.user;
 
       if (auth.currentUser) {
