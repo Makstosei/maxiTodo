@@ -1,16 +1,16 @@
-"use client";
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { signInWithEmailAndPassword } from "firebase/auth";
-
-import { auth } from "../../utils/firebase";
-import styles from "./style.module.css";
+import { auth, db } from "../../utils/firebase";
+import { toggleTheme } from "../../redux/reducers/themeReducer";
+import { onValue, ref, get } from "firebase/database";
 
 export default function Login() {
-  const [email, setEmail] = React.useState("");
-  const [password, setPassword] = React.useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
+  const dispatch = useDispatch();
   const theme = useSelector((state) => state.theme);
 
   const inputClass = theme === "dark" ? "inputDark" : "inputLight";
@@ -19,7 +19,7 @@ export default function Login() {
 
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
-      handleSignIn(); // Enter tuşuna basıldığında giriş işlemini tetikle
+      handleSignIn();
     }
   };
 
@@ -31,34 +31,37 @@ export default function Login() {
     setPassword(event.target.value);
   };
 
-  const handleSignIn = () => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        console.log("singed in succesfully");
-        const user = userCredential.user;
-        router.push(`user/1`);
-      })
-      .catch((error) => {
-        console.log("error");
-        const errorMessage = error.message;
-        alert(errorMessage);
-      });
+  const handleSignIn = async () => {
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      console.log("Signed in successfully");
+
+      const user = userCredential.user;
+
+      const snapshot = await get(ref(db, `db/users/${auth.currentUser.uid}`));
+      const data = snapshot.val();
+
+      //setTheme çalışmadı.!!!!!!!!
+      if (data && theme !== data.theme) {
+        await dispatch(toggleTheme({ theme: data.theme }));
+        console.log("Theme updated:", theme);
+      }
+      //setTheme çalışmadı.!!!!!!!!
+
+      router.push(`/user/${data.displayName}`);
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(errorMessage);
+    }
   };
 
   return (
     <div className={`d-flex flex-column align-items-center justify-content-center gap-1`}>
       <h3 className={`font-monospace ${titleClass}`}>Login</h3>
+      <input className={` ${inputClass}`} type="email" placeholder="Email" onChange={handleEmailChange} onKeyDown={handleKeyPress} value={email} />
       <input
-        className={`${styles.email} ${inputClass}`}
-        type="email"
-        placeholder="Email"
-        onChange={handleEmailChange}
-        onKeyDown={handleKeyPress}
-        value={email}
-      />
-      <input
-        className={`${styles.password} ${inputClass}`}
+        className={` ${inputClass}`}
         type="password"
         placeholder="Password"
         onChange={handlePasswordChange}

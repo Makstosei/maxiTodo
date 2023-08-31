@@ -2,15 +2,17 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const themeSlice = createSlice({
   name: "theme",
-  initialState: "light" || "light", // Yerel depolamadan temayı al
+  initialState: "light",
   reducers: {
     toggleTheme: (state) => {
       const newTheme = state === "light" ? "dark" : "light";
-      localStorage.setItem("theme", newTheme); // Temayı yerel depolamaya kaydet
-      return newTheme;
+      return (state = newTheme); // Burada state güncelleniyor
+    },
+    setTheme: (state, action) => {
+      return (state = action.payload); // Burada state güncelleniyor
     },
   },
 });
 
-export const { toggleTheme } = themeSlice.actions;
+export const { toggleTheme, setTheme } = themeSlice.actions;
 export default themeSlice.reducer;

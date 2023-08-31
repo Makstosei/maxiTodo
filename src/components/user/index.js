@@ -2,31 +2,36 @@ import React from "react";
 import TodoList from "../todolist";
 
 import { auth, db } from "../../utils/firebase";
-import { onAuthStateChanged } from "firebase/auth";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-import { onValue, ref, remove, set } from "firebase/database";
-
-function formatTimestamp(timestamp) {
-  const options = {
-    hour: "2-digit",
-    minute: "2-digit",
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  };
-
-  return new Date(timestamp).toLocaleString("tr-TR", options);
-}
+import { onValue, ref, get } from "firebase/database";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleTheme } from "../../redux/reducers/themeReducer";
 
 export default function UserPage() {
   const [todos, setTodos] = useState([]);
   const [workingTodo, setWorkingTodo] = useState([]);
   const [completedTodo, setCompletedTodo] = useState([]);
-  const [edit, setEdit] = useState(false);
-  const timestamp = Date.now();
-  const formattedTimestamp = formatTimestamp(timestamp);
+  const theme = useSelector((state) => state.theme);
+  const dispatch = useDispatch();
 
+  const updateTheme = async () => {
+    try {
+      const snapshot = await get(ref(db, `db/users/${auth.currentUser.uid}`));
+      const data = snapshot.val();
+
+      //setTheme çalışmadı.!!!!!!!!
+      if (data && theme !== data.theme) {
+        await dispatch(toggleTheme({ theme: data.theme }));
+        console.log("Theme updated:", theme);
+      }
+      //setTheme çalışmadı.!!!!!!!!
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(errorMessage);
+    }
+  };
+  updateTheme();
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {

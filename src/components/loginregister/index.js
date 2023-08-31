@@ -24,8 +24,6 @@ function LoginRegister() {
     console.log(newIsRegister);
   };
 
-  signOut(auth);
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (auth.currentUser && isRegistering) {

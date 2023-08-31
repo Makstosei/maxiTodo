@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import NextLink from "next/link";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { createUserWithEmailAndPassword } from "firebase/auth";
