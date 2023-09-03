@@ -16,9 +16,9 @@ export default function RootLayout({ children }:any) {
   return (
     <html lang="en" className={interFontFamily.className}>
         <body>
-          <ReduxProvider>
+        <ReduxProvider>
             <UserContainer  children={children}/>
-          </ReduxProvider>      
+            </ReduxProvider>
         </body>
     </html>
   )

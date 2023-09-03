@@ -16,9 +16,9 @@ import sunny from "../../media/sunizup.png";
 
 function Header() {
   const dispatch = useDispatch();
-  const router = useRouter();
   const [user, setUser] = useState(null);
   const theme = useSelector((state) => state.theme);
+  const router = useRouter();
 
   const moonImage = theme === "dark" ? cloudyMoon : sunny;
   const headerClass = theme === "dark" ? styles.headerDark : styles.headerLight;
@@ -27,20 +27,14 @@ function Header() {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setUser(user);
+      } else {
+        setUser(null);
       }
     });
   }, []);
 
   const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        router.push("/");
-      })
-      .catch((error) => {
-        // An error happened.
-        alert("An error happened.");
-      });
+    router.push("/");
   };
 
   return (

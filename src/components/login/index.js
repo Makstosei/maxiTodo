@@ -41,13 +41,6 @@ export default function Login() {
       const snapshot = await get(ref(db, `db/users/${auth.currentUser.uid}`));
       const data = snapshot.val();
 
-      //setTheme çalışmadı.!!!!!!!!
-      if (data && theme !== data.theme) {
-        await dispatch(toggleTheme({ theme: data.theme }));
-        console.log("Theme updated:", theme);
-      }
-      //setTheme çalışmadı.!!!!!!!!
-
       router.push(`/user/${data.displayName}`);
     } catch (error) {
       const errorCode = error.code;

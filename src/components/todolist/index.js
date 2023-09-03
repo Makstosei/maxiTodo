@@ -1,5 +1,7 @@
-// TodoList.js
+"use client";
 import React, { useState } from "react";
+import { useDroppable } from "@dnd-kit/core";
+
 import { useSelector } from "react-redux";
 import AddToDoModal from "../addtodomodal";
 import TodoItem from "../todoitem";
@@ -20,6 +22,10 @@ function formatTimestamp(timestamp) {
 function TodoList({ title, section, todos, deleteTodo, moveTodo }) {
   const theme = useSelector((state) => state.theme);
   const [showModal, setShowModal] = useState(false);
+  const { setNodeRef } = useDroppable({
+    id: title,
+  });
+
   const isDarkTheme = theme === "dark";
   const backgroundClass = isDarkTheme ? "bgDark" : "bgBlue2";
   const borderClass = isDarkTheme ? "border-primary" : "border-light";
@@ -33,10 +39,8 @@ function TodoList({ title, section, todos, deleteTodo, moveTodo }) {
     setShowModal(false);
   };
 
-  const sortedTodos = [...todos].sort((b, a) => b.lastupdate - a.lastupdate);
-
   return (
-    <div className={`${borderClass} ${backgroundClass} border d-flex flex-column flex-grow-1 col-12 col-lg-3 p-3 rounded-4`}>
+    <div ref={setNodeRef} className={`${borderClass} ${backgroundClass} border d-flex flex-column flex-grow-1 col-12 col-lg-3 p-3 rounded-4`}>
       <div className={`${borderClass} d-flex justify-content-between border-bottom mb-2`}>
         <h3 className={`${textClass} fw-bold`}>{title}</h3>
         {section === "todo" && (
@@ -46,8 +50,9 @@ function TodoList({ title, section, todos, deleteTodo, moveTodo }) {
         )}
       </div>
       <ul className={`${backgroundClass} d-flex flex-column gap-2 p-0 m-0`}>
-        {sortedTodos.map((todo) => (
+        {todos.map((todo) => (
           <TodoItem
+            todo={todo}
             todos={todos}
             key={todo.uidd}
             uidd={todo.uidd}
@@ -59,6 +64,7 @@ function TodoList({ title, section, todos, deleteTodo, moveTodo }) {
           />
         ))}
       </ul>
+
       <AddToDoModal showModal={showModal} closeModal={closeModal} />
     </div>
   );

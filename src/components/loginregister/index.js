@@ -23,11 +23,11 @@ function LoginRegister() {
     setIsRegister(newIsRegister);
     console.log(newIsRegister);
   };
-
+  auth.signOut();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (auth.currentUser && isRegistering) {
-        router.push("/user/123");
+        router.push("/");
       }
     });
 
