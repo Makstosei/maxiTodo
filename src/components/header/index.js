@@ -5,14 +5,27 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 import { signOut } from "firebase/auth";
+import { db } from "../../utils/firebase";
+import { onValue, ref, get } from "firebase/database";
 
 import { auth } from "../../utils/firebase";
 import { toggleTheme } from "../../redux/reducers/themeReducer";
+import alertify from "alertifyjs";
 
 import styles from "./style.module.css";
 import Image from "next/image";
 import cloudyMoon from "../../media/cloudynight.png";
 import sunny from "../../media/sunizup.png";
+import { current } from "@reduxjs/toolkit";
+
+async function CheckUser() {
+  const currentURL = window.location.pathname;
+  if (currentURL.startsWith("/user/")) {
+    const snapshot = await get(ref(db, `db/users/${auth.currentUser.uid}`));
+    const data = snapshot.val();
+    alertify.notify(`Welcome ${data.displayName}`, "success", 2);
+  }
+}
 
 function Header() {
   const dispatch = useDispatch();
@@ -25,8 +38,10 @@ function Header() {
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      if (user) {
+      const currentURL = window.location.pathname;
+      if (user && currentURL.startsWith("/user/")) {
         setUser(user);
+        CheckUser(router);
       } else {
         setUser(null);
       }

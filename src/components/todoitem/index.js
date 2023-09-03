@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useDraggable } from "@dnd-kit/core";
 import { CSS } from "@dnd-kit/utilities";
 import { SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable";
+import alertify from "alertifyjs";
 
 import { ref, remove, set } from "firebase/database";
 import { auth, db } from "../../utils/firebase";
@@ -40,12 +41,19 @@ function TodoItem({ section, task, entrydata, uidd, todos, moveTodo }) {
 
   const handleMoveToWorking = () => {
     moveTodo(uidd, "workingon");
+    alertify.notify(todo.todo + ` moved to "Working On".`, "warning", 2);
+  };
+  const handleMoveToWorkingFromCompleted = () => {
+    moveTodo(uidd, "workingon");
+    alertify.notify(todo.todo + ` moved to "Working On".`, "error", 2);
   };
   const handleMoveToTodo = () => {
     moveTodo(uidd, "todo");
+    alertify.notify(todo.todo + ` moved to "To Do".`, "warning", 2);
   };
   const handleMoveToCompleted = () => {
     moveTodo(uidd, "completed");
+    alertify.notify(todo.todo + ` moved to "Completed".`, "success", 2);
   };
 
   const handleDelete = async () => {
@@ -63,6 +71,7 @@ function TodoItem({ section, task, entrydata, uidd, todos, moveTodo }) {
     if (section == "todo") {
       remove(ref(db, `db/todos/${auth.currentUser.uid}/todo/${uidd}`));
     }
+    alertify.notify(todo.todo + " deleted", "error", 2);
   };
 
   return (
@@ -91,7 +100,7 @@ function TodoItem({ section, task, entrydata, uidd, todos, moveTodo }) {
           )}
 
           {section == "completed" && (
-            <button className="col" onClick={handleMoveToWorking}>
+            <button className="col" onClick={handleMoveToWorkingFromCompleted}>
               <FaUndo className={`${textClass} fs-4`} />
             </button>
           )}

@@ -7,6 +7,7 @@ import UserContainer from "../../containers/userpage";
 import "../../../styles/reset.css";
 import "../../../styles/variables.css";
 import "../../../styles/global.css";
+import "alertifyjs/build/css/alertify.min.css";
 
 import "bootstrap/dist/css/bootstrap.css";
 

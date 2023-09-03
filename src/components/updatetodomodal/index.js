@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { auth, db } from "../../utils/firebase";
 import { set, ref } from "firebase/database";
+import alertify from "alertifyjs";
 
 function UpdateToDoModal({ showModal, closeModal, todo }) {
   const [updatedTitle, setUpdatedTitle] = useState(todo.todo);
@@ -26,6 +27,8 @@ function UpdateToDoModal({ showModal, closeModal, todo }) {
       section: todo.section,
       history: updatedHistory,
     });
+
+    alertify.notify(`Todo updated from : ${todo.todo} to : ${updatedTitle} `, "success", 2);
 
     closeModal();
   };

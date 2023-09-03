@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { auth, db } from "../../utils/firebase"; // Firebase db import ediliyor
 import { uid } from "uid";
 import { set, ref } from "firebase/database";
+import alertify from "alertifyjs";
 
 function formatTimestamp(timestamp) {
   const options = {
@@ -39,6 +40,7 @@ function AddToDoModal({ showModal, closeModal }) {
         },
       ],
     });
+    alertify.notify(todoTitle + " added", "success", 2);
 
     setTodoTitle(""); // Input alanını temizle
     closeModal(); // Modalı kapat

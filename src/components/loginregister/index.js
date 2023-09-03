@@ -7,9 +7,12 @@ import { onAuthStateChanged } from "firebase/auth";
 import Login from "../../components/login";
 import Register from "../../components/register";
 import { useRouter } from "next/navigation"; // useRouter ekledik
-import { signOut } from "firebase/auth";
 
 import styles from "./style.module.css";
+
+function logout() {
+  auth.signOut();
+}
 
 function LoginRegister() {
   const [isRegistering, setIsRegister] = React.useState(false);
@@ -23,7 +26,7 @@ function LoginRegister() {
     setIsRegister(newIsRegister);
     console.log(newIsRegister);
   };
-  auth.signOut();
+  logout();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (auth.currentUser && isRegistering) {
